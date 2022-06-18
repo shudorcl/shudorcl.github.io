@@ -1,3 +1,0 @@
-User-agent: *
-
-Sitemap: https://github.dsrkafuu.net/sitemap.xml
