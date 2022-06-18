@@ -35,3 +35,11 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 我主题选择的是[Fuji](https://github.com/dsrkafuu/hugo-theme-fuji)。
 
 后面摸了，可以去看官网如何部署到GitHub Pages，或者找几篇文章参考一下，比如说[这篇](https://zz2summer.github.io/github-pages-hugo-%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2)。
+
+值得注意的一点就是，如果你在部署page的时候选择的基底文件夹是`docs`，那么可以对config.toml进行如下修改
+
+`
+publishDir = "./docs"
+`
+
+这样编译生成的静态网站就可以定位到docs文件夹了。
