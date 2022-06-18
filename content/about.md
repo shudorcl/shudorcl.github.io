@@ -15,4 +15,4 @@ showToc = false
 
 ## 联系我
 
-shuwsh@foxmail.com 好吧，是有点复古
+shudorcl@qq.com 好吧，是有点复古
