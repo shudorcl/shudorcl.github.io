@@ -15,4 +15,4 @@ showToc = false
 
 ## 联系我
 
-shudorcl@qq.com 好吧，是有点复古
+shudorcl AT qq DOT com 好吧，是有点复古

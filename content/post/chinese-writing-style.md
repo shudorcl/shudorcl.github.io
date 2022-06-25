@@ -5,6 +5,9 @@ draft: false
 ---
 > 转载自 <https://stdrc.cc/style-guides/chinese.html>
 
+[RC](https://github.com/richardchien) 大佬的中文写作指南，转载一份留作参考
+<!--more-->
+
 ## 空格
 
 ### 中英文之间加空格

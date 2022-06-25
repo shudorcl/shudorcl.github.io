@@ -6,7 +6,19 @@
     <description>Recent content in Posts on dorcl&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 18 Jun 2022 21:53:44 +0800</lastBuildDate><atom:link href="https://shudorcl.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 25 Jun 2022 11:53:37 +0800</lastBuildDate><atom:link href="https://shudorcl.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>【转载】中文写作风格指南</title>
+      <link>https://shudorcl.github.io/post/chinese-writing-style/</link>
+      <pubDate>Sat, 25 Jun 2022 11:53:37 +0800</pubDate>
+      
+      <guid>https://shudorcl.github.io/post/chinese-writing-style/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;转载自 &lt;a href=&#34;https://stdrc.cc/style-guides/chinese.html&#34; target=&#34;_blank&#34;&gt;https://stdrc.cc/style-guides/chinese.html&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/richardchien&#34; target=&#34;_blank&#34;&gt;RC&lt;/a&gt; 大佬的中文写作指南，转载一份留作参考&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>关于这个博客是怎么搭的这件事</title>
       <link>https://shudorcl.github.io/post/how-to-build-a-blog/</link>
