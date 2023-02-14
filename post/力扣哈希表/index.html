@@ -1,0 +1,348 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=HandheldFriendly content="True"><meta http-equiv=x-ua-compatible content="IE=edge"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=generator content="Hugo 0.110.0"><link rel=apple-touch-icon sizes=180x180 href=https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon-16x16.png><link rel=manifest href=https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/site.webmanifest><link rel=mask-icon href=https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/safari-pinned-tab.svg color=#8aa2d3><link rel="shortcut icon" href=https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon.ico><meta name=theme-color content="#ffffff"><title>力扣哈希表 - dorcl's Blog</title><meta name=author content="dorcl"><meta name=description content="A minimal Hugo theme with nice theme color."><meta name=keywords content="力扣"><meta property="og:title" content="力扣哈希表"><meta name=twitter:title content="力扣哈希表"><meta property="og:type" content="article"><meta property="og:url" content="https://shudorcl.github.io/post/%E5%8A%9B%E6%89%A3%E5%93%88%E5%B8%8C%E8%A1%A8/"><meta property="og:description" content="哈希表怎么用倒是没那么难……
+一般哈希表都是用来快速判断一个元素是否出现集合里"><meta name=twitter:description content="哈希表怎么用倒是没那么难……
+一般哈希表都是用来快速判断一个元素是否出现集合里"><meta property="og:image" content="https://shudorcl.github.io/img/og.png"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://shudorcl.github.io/img/og.png"><meta property="article:published_time" content="2022-11-22T00:02:31+08:00"><meta property="article:modified_time" content="2022-11-22T00:02:31+08:00"><style>@media(prefers-color-scheme:dark){body[data-theme=auto] img{filter:brightness(60%)}}body[data-theme=dark] img{filter:brightness(60%)}</style><link rel=stylesheet href=https://shudorcl.github.io/assets/css/fuji.min.css></head><body data-theme=auto data-theme-auto=true><script data-cfasync=false>var fujiThemeData=localStorage.getItem("fuji_data-theme");fujiThemeData?fujiThemeData!=="auto"&&document.body.setAttribute("data-theme",fujiThemeData==="dark"?"dark":"light"):localStorage.setItem("fuji_data-theme","auto")</script><header><div class="container-lg clearfix"><div class="col-12 header"><a class=title-main href=https://shudorcl.github.io>dorcl's Blog</a>
+<span class=title-sub>To The Unlimited Future...</span></div></div></header><main><div class="container-lg clearfix"><div class="col-12 col-md-9 float-left content"><article><h2 class="post-item post-title"><a href=https://shudorcl.github.io/post/%E5%8A%9B%E6%89%A3%E5%93%88%E5%B8%8C%E8%A1%A8/>力扣哈希表</a></h2><div class="post-item post-meta"><span><i class="iconfont icon-today-sharp"></i>&nbsp;2022-11-22</span>
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;2166 words</span>
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href=/tags/%E5%8A%9B%E6%89%A3>力扣</a>&nbsp;</span></div><div class="post-content markdown-body"><p>哈希表怎么用倒是没那么难……</p><p>一般哈希表都是用来<strong>快速判断一个元素是否出现集合里</strong></p><h2 id=242-valid-anagram>242. Valid Anagram</h2><h3 id=题目描述>题目描述</h3><p>Given two strings s and t, return true if t is an anagram of s, and false otherwise.</p><p>An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.</p><h3 id=解题思路>解题思路</h3><h4 id=排序字符串>排序字符串</h4><p>最简单的，排序字符串</p><pre><code class=language-python>class Solution:
+    def isAnagram(self, s: str, t: str) -&gt; bool:
+        return &quot;&quot;.join(sorted(s))==&quot;&quot;.join(sorted(t))
+</code></pre><p>但这毕竟不是哈希表……</p><h4 id=哈希表>哈希表</h4><pre><code class=language-go>func isAnagram(s string, t string) bool {
+    exist:=[26]int{}
+    for _,v:=range s{
+        exist[v-rune('a')]++
+    }
+    for _,v:=range t{
+        exist[v-rune('a')]--
+    }
+    for i:=0;i&lt;len(exist);i++{
+        if exist[i]!=0{
+            return false
+        }
+    }
+    return true
+}
+</code></pre><p>之前写得比较复杂，思路是读两个字符串再对比，这样更简洁一些</p><p>以及Go遍历字符串的话需要注意，<code>range</code>遍历是<code>rune</code>类型，而下标遍历是<code>byte</code>类型</p><h2 id=349-intersection-of-two-arrays>349. Intersection of Two Arrays</h2><h3 id=题目描述-1>题目描述</h3><p>Given two integer arrays nums1 and nums2, return an array of their intersection. Each element in the result must be unique and you may return the result in any order.</p><h3 id=解题思路-1>解题思路</h3><p>没什么好说的，读<code>nums1</code>入哈希然后一个个比对<code>nums2</code>就好</p><pre><code class=language-go>func intersection(nums1 []int, nums2 []int) []int {
+    ans := []int{}
+    uniqueMap:=make(map[int]bool)
+    for _,v := range nums1{
+        uniqueMap[v]=true
+    }
+    for _,v := range nums2{
+        if key,ok:=uniqueMap[v];key&amp;&amp;ok{
+            ans = append(ans,v)
+            uniqueMap[v] = false    // 标false以免重复加入ans
+        }
+    }
+    return ans
+}
+</code></pre><h2 id=202-happy-number>202. Happy Number</h2><h3 id=题目描述-2>题目描述</h3><p>Write an algorithm to determine if a number n is happy.</p><p>A happy number is a number defined by the following process:</p><p>Starting with any positive integer, replace the number by the sum of the squares of its digits.
+Repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1.
+Those numbers for which this process ends in 1 are happy.
+Return true if n is a happy number, and false if not.</p><h3 id=解题思路-2>解题思路</h3><p>这……这和哈希表有什么关系吗！</p><p>看了看题解，因为求快乐数的过程是不是<strong>无限循环</strong>就是结果为1，所以用哈希表可以<strong>快速判断一个元素是否出现集合里</strong>（照应前文了，鼓掌👏👏👏）</p><pre><code class=language-go>func isHappy(n int) bool {
+    existMap := make(map[int]bool,10)
+    for n!=1&amp;&amp;!existMap[n]{
+        n,existMap[n] = getSum(n),true
+    }
+    return n==1
+}
+
+func getSum(n int) int{
+    sum:=0
+    for n!=0{
+        sum+=(n%10)*(n%10)
+        n=n/10
+    }
+    return sum
+}
+</code></pre><p>就先这些了，摸了！</p><h2 id=1-two-sum>1. Two Sum</h2><h3 id=题目描述-3>题目描述</h3><p>Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.</p><p>You may assume that each input would have exactly one solution, and you may not use the same element twice.</p><p>You can return the answer in any order.</p><p>……这不是力扣第一题，跟哈希表有什么关系</p><h3 id=解题思路-3>解题思路</h3><p>嗯，记录 <code>num:target-num</code> 然后找？</p><pre><code class=language-go>func twoSum(nums []int, target int) []int {
+    targetNum:=make(map[int]int)
+    for k,v := range nums{
+        targetNum[v]=k
+        if loc,ok:=targetNum[target-v];ok&amp;&amp;loc!=k{
+            return []int{k,loc}
+        }
+    }
+    return []int{}
+}   
+</code></pre><p>(ﾟ∀。)那么碰到<code>[3,3]</code>怎么办</p><p>看了看解析</p><pre><code class=language-go>func twoSum(nums []int, target int) []int {
+    targetNum:=make(map[int]int)
+    for k,v := range nums{
+        if loc,ok:=targetNum[target-v];ok&amp;&amp;loc!=k{
+            return []int{k,loc}
+        }
+        targetNum[v]=k
+    }
+    return []int{}
+}
+</code></pre><p>(ﾟ∀。)先判断再存进去啊，这样确实可以保证不会和自己匹配了</p><h2 id=454-4sum-ii>454. 4Sum II</h2><h3 id=题目描述-4>题目描述</h3><p>Given four integer arrays nums1, nums2, nums3, and nums4 all of length n, return the number of tuples (i, j, k, l) such that:</p><ul><li>0 &lt;= i, j, k, l &lt; n</li><li>nums1[i] + nums2[j] + nums3[k] + nums4[l] == 0</li></ul><h3 id=解题思路-4>解题思路</h3><p>(ﾟ∀。)照猫画虎……吗？</p><pre><code class=language-go>func fourSumCount(nums1 []int, nums2 []int, nums3 []int, nums4 []int) int {
+    ans:=0
+    countMapAB:=make(map[int]int)
+    countMapCD:=make(map[int]int)
+    for _,v1:=range nums1{
+        for _,v2:=range nums2{
+            countMapAB[v1+v2]++
+        }
+    }
+    for _,v1:=range nums3{
+        for _,v2:=range nums4{
+            countMapCD[v1+v2]++
+        }
+    }
+    for _,v1 := range countMapAB{
+        if v2,ok:=countMapCD[0-v1];ok{
+            ans+=v1*v2
+        }
+    }
+    return ans
+}
+</code></pre><p>样例没过，但是搞不清楚问题在哪</p><p>看看题解……</p><pre><code class=language-go>func fourSumCount(nums1 []int, nums2 []int, nums3 []int, nums4 []int) int {
+    ans:=0
+    countMapAB:=make(map[int]int)
+    for _,v1:=range nums1{
+        for _,v2:=range nums2{
+            countMapAB[v1+v2]++
+        }
+    }
+    for _,v1:=range nums3{
+        for _,v2:=range nums4{
+            if v,ok:=countMapAB[-v1-v2];ok{
+                ans+=v
+            }
+        }
+    }
+    return ans
+}
+</code></pre><p>原来可以不用第二个哈希表……</p><p>但是为什么第一次不对呢？</p><p>（一番调试过后）</p><p>(ﾟ∀。)猪鼻吧，原来应该是访问<code>countMapCD[0-loc]</code>，我当时还想为什么会加loc</p><p>很好，时间快多了~ 从45%到73%</p><pre><code class=language-go>func fourSumCount(nums1 []int, nums2 []int, nums3 []int, nums4 []int) int {
+    ans:=0
+    countMapAB:=make(map[int]int)
+    countMapCD:=make(map[int]int)
+    for _,v1:=range nums1{
+        for _,v2:=range nums2{
+            countMapAB[v1+v2]++
+        }
+    }
+    for _,v1:=range nums3{
+        for _,v2:=range nums4{
+            countMapCD[v1+v2]++
+        }
+    }
+    for loc,v1 := range countMapAB{
+        if v2,ok:=countMapCD[0-loc];ok{
+            ans+=v1*v2
+        }
+    }
+    return ans
+}
+</code></pre><h2 id=383-ransom-note>383. Ransom Note</h2><h3 id=题目描述-5>题目描述</h3><p>Given two strings ransomNote and magazine, return true if ransomNote can be constructed by using the letters from magazine and false otherwise.</p><p>Each letter in magazine can only be used once in ransomNote.</p><h3 id=解题思路-5>解题思路</h3><p>轻轻松松</p><pre><code class=language-go>func canConstruct(ransomNote string, magazine string) bool {
+    magazineList := [26]int{}
+    for _,v := range magazine{
+        magazineList[rune(v)-'a']++
+    }
+    for _,v := range ransomNote{
+        magazineList[rune(v)-'a']--
+    }
+    for _,v := range magazineList{
+        if v&lt;0{
+            return false
+        }
+    }
+    return true
+
+}
+</code></pre><p>用数组是因为性能更好一点，哈希表需要红黑树维护</p><h2 id=15-3sum>15. 3Sum</h2><h3 id=题目描述-6>题目描述</h3><p>Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.</p><p>Notice that the solution set must not contain duplicate triplets.</p><h3 id=解题思路-6>解题思路</h3><p>嗯，看到标签有双指针……</p><pre><code class=language-go>func threeSum(nums []int) [][]int {
+    ans := make([][]int,0)
+    for key,value := range nums{
+        for preKey:=0;preKey&lt;0;preKey++{
+            if preKey==key{
+                continue
+            }
+            for aftKey:=0;aftKey&lt;0;aftKey++{
+                if aftKey==key||aftKey==preKey{
+                    continue
+                }
+                if nums[aftKey]+nums[preKey]+value==0{
+                    temp := []int{nums[aftKey],nums[preKey],value}
+                    ans=append(ans,temp)
+                }
+            }
+        }
+    }
+    return ans
+}
+</code></pre><p>结果全都是空的！</p><p>摆了，看题解</p><p>嗯，先对数组排序，因为找的是值不是坐标，然后固定第一个值，两个指针向里收缩？</p><pre><code class=language-go>func threeSum(nums []int) [][]int {
+    sort.Ints(nums)
+    ans:=[][]int{}
+    for key,value := range nums{
+        if value&gt;0{
+            break   // 若&gt;0则说明没有答案，返回
+        }
+        left,right:=key+1,len(nums)-1
+        for left&lt;right{
+            leftValue := nums[left]
+            rightValue := nums[right]
+            sum := value+leftValue+rightValue
+            if sum == 0{    // 符合条件加入
+                ans = append(ans,[]int{value,leftValue,rightValue})
+                for left&lt;right&amp;&amp;nums[left+1]==leftValue{
+                    // 左边收缩到不相同
+                    left++
+                }
+                for left&lt;right&amp;&amp;nums[right-1]==rightValue{
+                    // 右边同样
+                    right--
+                }
+                // 找到答案，同时收缩
+                // 因为已经排序去重，所以只收缩一边肯定不等于0
+                left++
+                right--
+            }else if sum&gt;0{
+                // 大于0，收缩右边
+                right--
+            }else{
+                // 小于0，收缩左边
+                left++
+            }
+        }
+    }
+    return ans
+}
+</code></pre><p>样例过了，栽倒了<code>[0,0,0,0]</code></p><p>噢，猪鼻了，还要排除<code>value</code>的重复值</p><pre><code class=language-go>func threeSum(nums []int) [][]int {
+    sort.Ints(nums)
+    ans:=[][]int{}
+    for key,value := range nums{
+        if value&gt;0{
+            break   // 若&gt;0则说明没有答案，返回
+        }
+        if key&gt;0&amp;&amp;value==nums[key-1]{
+            continue
+        }
+        left,right:=key+1,len(nums)-1
+        for left&lt;right{
+            leftValue := nums[left]
+            rightValue := nums[right]
+            sum := value+leftValue+rightValue
+            if sum == 0{    // 符合条件加入
+                ans = append(ans,[]int{value,leftValue,rightValue})
+                for left&lt;right&amp;&amp;nums[left+1]==leftValue{
+                    // 左边收缩到不相同
+                    left++
+                }
+                for left&lt;right&amp;&amp;nums[right-1]==rightValue{
+                    // 右边同样
+                    right--
+                }
+                // 找到答案，同时收缩
+                // 因为已经排序去重，所以只收缩一边肯定不等于0
+                left++
+                right--
+            }else if sum&gt;0{
+                // 大于0，收缩右边
+                right--
+            }else{
+                // 小于0，收缩左边
+                left++
+            }
+        }
+    }
+    return ans
+}
+</code></pre><p>嘶，有点一知半解……</p><h2 id=18-4sum>18. 4Sum</h2><p>前面不是做过<strong>4Sum II</strong>了嘛……</p><h3 id=题目描述-7>题目描述</h3><p>Given an array nums of n integers, return an array of all the unique quadruplets [nums[a], nums[b], nums[c], nums[d]] such that:</p><ul><li><p>0 &lt;= a, b, c, d &lt; n</p></li><li><p>a, b, c, and d are distinct.</p></li><li><p>nums[a] + nums[b] + nums[c] + nums[d] == target</p></li><li><p>You may return the answer in any order.</p></li></ul><h3 id=解题思路-7>解题思路</h3><p>好吧，好像有点不太一样……</p><p>看标签，<code>Array</code> <code>Sorting</code> <code>Two Pointers</code></p><p>噗嗤，这还是哈希表？</p><p>看了看评论还有超过整形的用例</p><p>按照上一题的思路似乎没有优雅的解法，先吃饭吧！</p><p>(ﾟ∀。)看了看题解视频，嗯，多套一层循环，然后剪枝去重……</p><p>让我试试！</p><pre><code class=language-go>func fourSum(nums []int, target int) [][]int {
+    sort.Ints(nums)
+    ans := [][]int{}
+    for key,value:=range nums{
+        if value&gt;target&amp;&amp;target&gt;0{
+            break                // 大于目标剪掉
+        }
+        if key&gt;0&amp;&amp;value==nums[key-1]{
+            continue
+        }
+        for i:=key+1;i&lt;len(nums);i++{
+            iValue := nums[i]
+            if iValue&gt;target-value&amp;&amp;target&gt;value{
+                break
+            }
+            if i&gt;0&amp;&amp;iValue==nums[i-1]{
+                continue
+            }
+            leftKey,rightKey:=i+1,len(nums)-1
+            for leftKey&lt;rightKey{
+                leftValue,rightValue:=nums[leftKey],nums[rightKey]
+                sum:=leftValue+rightValue+iValue+value
+                if sum==target{
+                    ans=append(ans,[]int{leftValue,rightValue,iValue,value})
+                    // 去重
+                    for leftKey&lt;rightKey&amp;&amp;leftValue==nums[leftKey+1]{
+                        leftKey++
+                    }
+                    for leftKey&lt;rightKey&amp;&amp;rightValue==nums[rightKey-1]{
+                        rightKey--
+                    }
+                    leftKey++
+                    rightKey--
+                }else if sum&gt;target{
+                    rightKey--
+                }else{
+                    leftKey++
+                }
+            }
+        }
+    }
+    return ans
+}
+</code></pre><p>在<code>[2,2,2,2]</code>没过，看起来应该是去重的时候出现了点问题……</p><p>找到了，<code>i>0</code> -> <code>i>key+1</code></p><pre><code class=language-go>func fourSum(nums []int, target int) [][]int {
+    sort.Ints(nums)
+    ans := [][]int{}
+    for key,value:=range nums{
+        if value&gt;target&amp;&amp;target&gt;0{
+            break                // 大于目标剪掉
+        }
+        if key&gt;0&amp;&amp;value==nums[key-1]{
+            continue
+        }
+        for i:=key+1;i&lt;len(nums);i++{
+            iValue := nums[i]
+            if iValue&gt;target-value&amp;&amp;target&gt;value{
+                break
+            }
+            if i&gt;key+1&amp;&amp;iValue==nums[i-1]{
+                continue
+            }
+            leftKey,rightKey:=i+1,len(nums)-1
+            for leftKey&lt;rightKey{
+                leftValue,rightValue:=nums[leftKey],nums[rightKey]
+                sum:=leftValue+rightValue+iValue+value
+                if sum==target{
+                    ans=append(ans,[]int{leftValue,rightValue,iValue,value})
+                    // 去重
+                    for leftKey&lt;rightKey&amp;&amp;leftValue==nums[leftKey+1]{
+                        leftKey++
+                    }
+                    for leftKey&lt;rightKey&amp;&amp;rightValue==nums[rightKey-1]{
+                        rightKey--
+                    }
+                    leftKey++
+                    rightKey--
+                }else if sum&gt;target{
+                    rightKey--
+                }else{
+                    leftKey++
+                }
+            }
+        }
+    }
+    return ans
+}
+</code></pre><p>和前面的4SumII区别还是不小的，前者是四个数组可以用哈希表，但是这里是一个数组，双指针效率更高一点。</p><p>力扣哈希表也完结了，虽然最后两道题明明就是双指针……</p><h2 id=总结>总结</h2><p>哈希表都是用来<strong>快速判断</strong>一个元素是否出现集合里。</p></div></article><div class="license markdown-body"><blockquote><p>Unless otherwise noted, the content of this site is licensed under <a rel=license href=http://creativecommons.org/licenses/by-nc-sa/4.0/ target=_blank>CC BY-NC-SA 4.0</a>.</p></blockquote></div></div><aside class="col-12 col-md-3 float-left sidebar"><div class="sidebar-item sidebar-pages"><h3>Pages</h3><ul><li><a href=/>Home</a></li><li><a href=/archives/>Archives</a></li><li><a href=/mood/>Mood</a></li><li><a href=/friends/>Friends</a></li><li><a href=/about/>About</a></li><li><a href=/search/>Search</a></li><li><a href=/index.xml>RSS</a></li></ul></div><div class="sidebar-item sidebar-links"><h3>Links</h3><ul><li><a href=https://github.com/shudorcl target=_blank><span>GitHub</span></a></li></ul></div><div class="sidebar-item sidebar-tags"><h3>Tags</h3><div><span><a href=/tags/%E5%8A%9B%E6%89%A3/>力扣</a></span>
+<span><a href=/tags/%E6%9D%82%E7%89%A9/>杂物</a></span>
+<span><a href=/tags/%E7%AC%94%E8%AE%B0/>笔记</a></span>
+<span><a href=/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/>计算机</a></span></div></div><div class="sidebar-item sidebar-toc"><h3>Table of Contents</h3><nav id=TableOfContents><ul><li><a href=#242-valid-anagram>242. Valid Anagram</a><ul><li><a href=#题目描述>题目描述</a></li><li><a href=#解题思路>解题思路</a></li></ul></li><li><a href=#349-intersection-of-two-arrays>349. Intersection of Two Arrays</a><ul><li><a href=#题目描述-1>题目描述</a></li><li><a href=#解题思路-1>解题思路</a></li></ul></li><li><a href=#202-happy-number>202. Happy Number</a><ul><li><a href=#题目描述-2>题目描述</a></li><li><a href=#解题思路-2>解题思路</a></li></ul></li><li><a href=#1-two-sum>1. Two Sum</a><ul><li><a href=#题目描述-3>题目描述</a></li><li><a href=#解题思路-3>解题思路</a></li></ul></li><li><a href=#454-4sum-ii>454. 4Sum II</a><ul><li><a href=#题目描述-4>题目描述</a></li><li><a href=#解题思路-4>解题思路</a></li></ul></li><li><a href=#383-ransom-note>383. Ransom Note</a><ul><li><a href=#题目描述-5>题目描述</a></li><li><a href=#解题思路-5>解题思路</a></li></ul></li><li><a href=#15-3sum>15. 3Sum</a><ul><li><a href=#题目描述-6>题目描述</a></li><li><a href=#解题思路-6>解题思路</a></li></ul></li><li><a href=#18-4sum>18. 4Sum</a><ul><li><a href=#题目描述-7>题目描述</a></li><li><a href=#解题思路-7>解题思路</a></li></ul></li><li><a href=#总结>总结</a></li></ul></nav></div></aside></div><div class=btn><div class=btn-menu id=btn-menu><i class="iconfont icon-grid-sharp"></i></div><div class=btn-toggle-mode><i class="iconfont icon-contrast-sharp"></i></div><div class=btn-scroll-top><i class="iconfont icon-chevron-up-circle-sharp"></i></div></div><aside class=sidebar-mobile style=display:none><div class=sidebar-wrapper><div class="sidebar-item sidebar-pages"><h3>Pages</h3><ul><li><a href=/>Home</a></li><li><a href=/archives/>Archives</a></li><li><a href=/mood/>Mood</a></li><li><a href=/friends/>Friends</a></li><li><a href=/about/>About</a></li><li><a href=/search/>Search</a></li><li><a href=/index.xml>RSS</a></li></ul></div><div class="sidebar-item sidebar-links"><h3>Links</h3><ul><li><a href=https://github.com/shudorcl target=_blank><span>GitHub</span></a></li></ul></div><div class="sidebar-item sidebar-tags"><h3>Tags</h3><div><span><a href=/tags/%E5%8A%9B%E6%89%A3/>力扣</a></span>
+<span><a href=/tags/%E6%9D%82%E7%89%A9/>杂物</a></span>
+<span><a href=/tags/%E7%AC%94%E8%AE%B0/>笔记</a></span>
+<span><a href=/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/>计算机</a></span></div></div><div class="sidebar-item sidebar-toc"><h3>Table of Contents</h3><nav id=TableOfContents><ul><li><a href=#242-valid-anagram>242. Valid Anagram</a><ul><li><a href=#题目描述>题目描述</a></li><li><a href=#解题思路>解题思路</a></li></ul></li><li><a href=#349-intersection-of-two-arrays>349. Intersection of Two Arrays</a><ul><li><a href=#题目描述-1>题目描述</a></li><li><a href=#解题思路-1>解题思路</a></li></ul></li><li><a href=#202-happy-number>202. Happy Number</a><ul><li><a href=#题目描述-2>题目描述</a></li><li><a href=#解题思路-2>解题思路</a></li></ul></li><li><a href=#1-two-sum>1. Two Sum</a><ul><li><a href=#题目描述-3>题目描述</a></li><li><a href=#解题思路-3>解题思路</a></li></ul></li><li><a href=#454-4sum-ii>454. 4Sum II</a><ul><li><a href=#题目描述-4>题目描述</a></li><li><a href=#解题思路-4>解题思路</a></li></ul></li><li><a href=#383-ransom-note>383. Ransom Note</a><ul><li><a href=#题目描述-5>题目描述</a></li><li><a href=#解题思路-5>解题思路</a></li></ul></li><li><a href=#15-3sum>15. 3Sum</a><ul><li><a href=#题目描述-6>题目描述</a></li><li><a href=#解题思路-6>解题思路</a></li></ul></li><li><a href=#18-4sum>18. 4Sum</a><ul><li><a href=#题目描述-7>题目描述</a></li><li><a href=#解题思路-7>解题思路</a></li></ul></li><li><a href=#总结>总结</a></li></ul></nav></div></div></aside></main><footer><div class="container-lg clearfix"><div class="col-12 footer"><span>&copy; 2020-2023
+<a href=https://shudorcl.github.io>dorcl</a>
+| <a href=https://github.com/shudorcl/shudorcl.github.io>Source code</a>
+| Powered by <a href=https://github.com/dsrkafuu/hugo-theme-fuji/ target=_blank>Fuji-v2</a> & <a href=https://gohugo.io/ target=_blank>Hugo</a></span></div></div></footer><script defer src=https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js></script>
+<script defer src=https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js></script>
+<script defer src=https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js></script>
+<script defer src=https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js></script>
+<script defer src=/assets/js/fuji.min.js></script></body></html>

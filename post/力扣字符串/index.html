@@ -1,0 +1,380 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=HandheldFriendly content="True"><meta http-equiv=x-ua-compatible content="IE=edge"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=generator content="Hugo 0.110.0"><link rel=apple-touch-icon sizes=180x180 href=https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon-16x16.png><link rel=manifest href=https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/site.webmanifest><link rel=mask-icon href=https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/safari-pinned-tab.svg color=#8aa2d3><link rel="shortcut icon" href=https://cdn.jsdelivr.net/gh/amzrk2/cdn-stcapi@1/favicons/favicon.ico><meta name=theme-color content="#ffffff"><title>力扣字符串 - dorcl's Blog</title><meta name=author content="dorcl"><meta name=description content="A minimal Hugo theme with nice theme color."><meta name=keywords content="力扣"><meta property="og:title" content="力扣字符串"><meta name=twitter:title content="力扣字符串"><meta property="og:type" content="article"><meta property="og:url" content="https://shudorcl.github.io/post/%E5%8A%9B%E6%89%A3%E5%AD%97%E7%AC%A6%E4%B8%B2/"><meta property="og:description" content="速度变快了，是好事呢"><meta name=twitter:description content="速度变快了，是好事呢"><meta property="og:image" content="https://shudorcl.github.io/img/og.png"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://shudorcl.github.io/img/og.png"><meta property="article:published_time" content="2022-12-06T20:38:02+08:00"><meta property="article:modified_time" content="2022-12-06T20:38:02+08:00"><style>@media(prefers-color-scheme:dark){body[data-theme=auto] img{filter:brightness(60%)}}body[data-theme=dark] img{filter:brightness(60%)}</style><link rel=stylesheet href=https://shudorcl.github.io/assets/css/fuji.min.css></head><body data-theme=auto data-theme-auto=true><script data-cfasync=false>var fujiThemeData=localStorage.getItem("fuji_data-theme");fujiThemeData?fujiThemeData!=="auto"&&document.body.setAttribute("data-theme",fujiThemeData==="dark"?"dark":"light"):localStorage.setItem("fuji_data-theme","auto")</script><header><div class="container-lg clearfix"><div class="col-12 header"><a class=title-main href=https://shudorcl.github.io>dorcl's Blog</a>
+<span class=title-sub>To The Unlimited Future...</span></div></div></header><main><div class="container-lg clearfix"><div class="col-12 col-md-9 float-left content"><article><h2 class="post-item post-title"><a href=https://shudorcl.github.io/post/%E5%8A%9B%E6%89%A3%E5%AD%97%E7%AC%A6%E4%B8%B2/>力扣字符串</a></h2><div class="post-item post-meta"><span><i class="iconfont icon-today-sharp"></i>&nbsp;2022-12-06</span>
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;3222 words</span>
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href=/tags/%E5%8A%9B%E6%89%A3>力扣</a>&nbsp;</span></div><div class="post-content markdown-body"><p>速度变快了，是好事呢</p><h2 id=344-reverse-string>344. Reverse String</h2><h3 id=题目描述>题目描述</h3><p>Write a function that reverses a string. The input string is given as an array of characters s.</p><p>You must do this by modifying the input array in-place with O(1) extra memory.</p><h3 id=解题思路>解题思路</h3><p>这也是字符串？比反转链表简单多了……</p><pre><code class=language-go>func reverseString(s []byte)  {
+    for i:=0;i&lt;len(s)/2;i++{
+        temp:=s[i]
+        s[i]=s[len(s)-1-i]
+        s[len(s)-1-i]=temp
+    }
+}
+</code></pre><p>没必要使用<code>temp</code></p><pre><code class=language-go>func reverseString(s []byte)  {
+    for i:=0;i&lt;len(s)/2;i++{
+        s[i],s[len(s)-1-i]=s[len(s)-1-i],s[i]
+    }
+}
+</code></pre><p>思考要求低的话可以用双指针……</p><pre><code class=language-go>func reverseString(s []byte)  {
+    left,right:=0,len(s)-1
+    for left&lt;right{
+        s[left],s[right]=s[right],s[left]
+        left++
+        right--
+    }
+}
+</code></pre><p>那就过了</p><h2 id=541-reverse-string-ii>541. Reverse String II</h2><p>又来啊？</p><h3 id=题目描述-1>题目描述</h3><p>Given a string s and an integer k, reverse the first k characters for every 2k characters counting from the start of the string.</p><p>If there are fewer than k characters left, reverse all of them. If there are less than 2k but greater than or equal to k characters, then reverse the first k characters and leave the other as original.</p><p>这题目写的什么？总之就是每2k个字符反转前面k个，剩余不足k全部反转</p><h3 id=解题思路-1>解题思路</h3><p>嗯，感觉无从下手，主要是不知道go的字符串是怎么处理的</p><p>让我看看解析……</p><pre><code class=language-go>func reverseStr(s string, k int) string {
+    byteString := []byte(s)
+    for key:=0;key&lt;len(byteString);key+=2*k{
+        if key+k&lt;=len(byteString){
+            reverse(byteString[key:key+k])
+        }else{
+            reverse(byteString[key:len(byteString)])
+        }
+    }
+    return string(byteString)
+}
+func reverse(s []byte){
+    left,right:=0,len(s)-1
+    for left&lt;right{
+        s[left],s[right]=s[right],s[left]
+        left++
+        right--
+    }
+}
+</code></pre><p>感觉没什么自己的思考，这样不好</p><h2 id=剑指offer-05替换空格>剑指Offer 05.替换空格</h2><h3 id=题目描述-2>题目描述</h3><p>请实现一个函数，把字符串 s 中的每个空格替换成"%20"。</p><h3 id=解题思路-2>解题思路</h3><p>嗯哼，python3直接replace</p><pre><code class=language-python>class Solution:
+    def replaceSpace(self, s: str) -&gt; str:
+        return s.replace(&quot; &quot;,&quot;%20&quot;)
+</code></pre><p>那么go呢？</p><pre><code class=language-go>func replaceSpace(s string) string {
+    byteString := []byte(s)
+    ans := make([]byte,0)
+    for _,v := range byteString{
+        if v==' '{
+            ans=append(ans,[]byte(&quot;%20&quot;)...)
+        }else{
+            ans=append(ans,v)
+        }
+    }
+    return string(ans)
+}
+</code></pre><p>go在处理字符串的时候需要转换成<code>[]byte</code></p><p>而且，在append的时候，<code>"%20"</code>需要写成<code>[]byte("%20")...</code>，同样值得注意的是<code>append</code>一个<code>slice</code>时，需要在后面加上<code>...</code></p><p>为什么呢？先不管了</p><p>那么，还有什么不占额外空间的解法吗？</p><p>看了看思路，可以先将原数组扩充到空格全部替换为<code>%20</code>的长度</p><p>然后，<strong>从后往前</strong>地，用双指针法替换空格，从前往后的话，需要移动数据，增加复杂度</p><p>其实很多数组填充类的问题，都可以先预先给数组扩容带填充后的大小，然后在从后向前进行操作</p><pre><code class=language-go>func replaceSpace(s string) string {
+    byteString := []byte(s)
+    pointer := len(byteString)-1
+    spaceCount:=0
+    // 统计空格数
+    for _,v:=range byteString{
+        if v==' '{
+            spaceCount++
+        }
+    }
+    // 扩充长度
+    byteString=append(byteString,make([]byte,2*spaceCount)...)
+    prePointer := len(byteString)-1
+    for ;pointer&gt;=0;pointer--{
+        // 见空格替换退3
+        if byteString[pointer]==' '{
+            byteString[prePointer]='0'
+            byteString[prePointer-1]='2'
+            byteString[prePointer-2]='%'
+            prePointer-=3
+        // 否则退1替换
+        }else{
+            byteString[prePointer]=byteString[pointer]
+            prePointer--
+        }
+    }
+    return string(byteString)
+}
+</code></pre><p>超过百分百，爆杀！</p><h2 id=151-reverse-words-in-a-string>151. Reverse Words in a String</h2><h3 id=题目描述-3>题目描述</h3><p>Given an input string s, reverse the order of the words.</p><p>A word is defined as a sequence of non-space characters. The words in s will be separated by at least one space.</p><p>Return a string of the words in reverse order concatenated by a single space.</p><p>Note that s may contain leading or trailing spaces or multiple spaces between two words. The returned string should only have a single space separating the words. Do not include any extra spaces.</p><h3 id=解题思路-3>解题思路</h3><p>python一行</p><pre><code class=language-python>class Solution:
+    def reverseWords(self, s: str) -&gt; str:
+        return &quot; &quot;.join([x for x in s.split(&quot; &quot;)[::-1] if x!=&quot;&quot;])
+</code></pre><p>那么，go呢？</p><p>想了想，感觉可以倒着读，遇到空格就反转塞进去</p><pre><code class=language-go>func reverseWords(s string) string {
+    byteString := []byte(s)
+    pointer := len(s)-1
+    headPointer := 0
+    //去除尾部空格
+    for byteString[pointer]==' '{
+        pointer--
+    }
+    pointer++
+    //去除头部空格
+    for byteString[headPointer]==' '{
+        headPointer++
+    }
+    ans:=[]byte(&quot;&quot;)
+    prePointer:=pointer-1
+    for ;prePointer&gt;headPointer;prePointer--{
+        if byteString[prePointer]==' '{
+            ans=append(ans,byteString[prePointer+1:pointer]...)
+            ans=append(ans,[]byte(&quot; &quot;)...)
+            pointer=prePointer
+        }
+    }
+    ans=append(ans,byteString[prePointer:pointer]...)
+    return string(ans)
+}
+</code></pre><p>啊，中间也不能有连续的空格？</p><pre><code class=language-go>func reverseWords(s string) string {
+    byteString := []byte(s)
+    pointer := len(s)-1
+    headPointer := 0
+    //去除尾部空格
+    for byteString[pointer]==' '{
+        pointer--
+    }
+    pointer++
+    //去除头部空格
+    for byteString[headPointer]==' '{
+        headPointer++
+    }
+    flag:=true
+    ans:=[]byte(&quot;&quot;)
+    prePointer:=pointer-1
+    for ;prePointer&gt;headPointer;prePointer--{
+        if flag&amp;&amp;byteString[prePointer]==' '{
+            ans=append(ans,byteString[prePointer+1:pointer]...)
+            ans=append(ans,[]byte(&quot; &quot;)...)
+            pointer=prePointer
+            flag=false
+        }
+        if !flag&amp;&amp;byteString[prePointer]!=' '{
+            pointer=prePointer+1
+            flag=true
+        }
+    }
+    ans=append(ans,byteString[prePointer:pointer]...)
+    return string(ans)
+}
+</code></pre><p>但是卡了四个用例……比如<code>"I ueG7yY0Tgo i8Q9SUKyLz vk4zC 9p eDpBX96MRL IhzW K T 6FzR0 yKYgG"</code></p><p>很好……这样就行了</p><pre><code class=language-go>func reverseWords(s string) string {
+    byteString := []byte(s)
+    pointer := len(s)-1
+    headPointer := 0
+    //去除尾部空格
+    for byteString[pointer]==' '{
+        pointer--
+    }
+    pointer++
+    //去除头部空格
+    for byteString[headPointer]==' '{
+        headPointer++
+    }
+    flag:=true
+    ans:=[]byte(&quot;&quot;)
+    prePointer:=pointer-1
+    for ;;prePointer--{
+        if flag&amp;&amp;byteString[prePointer]==' '{
+            ans=append(ans,byteString[prePointer+1:pointer]...)
+            ans=append(ans,[]byte(&quot; &quot;)...)
+            pointer=prePointer
+            flag=false
+        }
+        if !flag&amp;&amp;byteString[prePointer]!=' '{
+            pointer=prePointer+1
+            flag=true
+        }
+        if prePointer==headPointer{
+            break
+        }
+    }
+    ans=append(ans,byteString[prePointer:pointer]...)
+    return string(ans)
+}
+</code></pre><p>看看题解有什么解法</p><p>嗯哼，还能不用辅助空间？</p><p>反转整个字符串，然后再反转单词？还能这样</p><p>首先，我们先关注如何去掉空格，我自己的解法里面是只去除了首尾，但是实际上可以读一次全部去除</p><p>这里就类似于数组中的移动元素，用双指针来标定移动后数组的长度，然后切一下片</p><p>然后，再遍历反转后的字符串，反转里面的单词，这里就和原来很像了</p><pre><code class=language-go>func reverseWords(s string) string {
+    slowKey, fastKey:=0,0
+    byteString := []byte(s)
+    // 去除头部空格
+    for fastKey&lt;len(byteString)&amp;&amp;byteString[fastKey]==' '{
+        fastKey++
+    }
+    // 过滤中间空格，slowKey即为去除后的切片长度
+    for ;fastKey&lt;len(byteString);fastKey++{
+        value:=byteString[fastKey]
+        if fastKey&gt;1&amp;&amp;value==' '&amp;&amp;value==byteString[fastKey-1]{
+            continue
+        }
+        byteString[slowKey]=value
+        slowKey++
+    }
+    // 去除末尾空格
+    if slowKey&gt;1&amp;&amp;byteString[slowKey-1]==' '{
+        byteString=byteString[:slowKey-1]
+    }else{
+        byteString=byteString[:slowKey]
+    }
+    // 反转整个字符串
+    reverse(&amp;byteString, 0, len(byteString)-1)
+    // 反转单词
+    slowKey = 0
+    for slowKey &lt; len(byteString) {
+        fastKey = slowKey
+        for fastKey &lt; len(byteString) &amp;&amp; byteString[fastKey] != ' '{
+            fastKey++
+        }
+        reverse(&amp;byteString, slowKey, fastKey-1)
+        slowKey = fastKey
+        slowKey++
+    }
+    return string(byteString)
+}
+
+func reverse(b *[]byte, left, right int) {
+    for left &lt; right {
+        (*b)[left], (*b)[right] = (*b)[right], (*b)[left]
+        left++
+        right--
+    }
+}
+</code></pre><h2 id=剑指-offer-58---ii-左旋转字符串-lcof>剑指 Offer 58 - II. 左旋转字符串 LCOF</h2><h3 id=题目描述-4>题目描述</h3><p>字符串的左旋转操作是把字符串前面的若干个字符转移到字符串的尾部。请定义一个函数实现字符串左旋转操作的功能。比如，输入字符串"abcdefg"和数字2，该函数将返回左旋转两位得到的结果"cdefgab"。</p><h3 id=解题思路-4>解题思路</h3><p>在有切片的语言里面是非常简单的</p><pre><code class=language-go>func reverseLeftWords(s string, n int) string {
+    byteString := []byte(s)
+    byteString = append(byteString,byteString[:n]...)
+    return string(byteString[n:])
+}
+</code></pre><p>那么，有什么不扩展空间的解法吗？</p><p>……想不出来，看看题解</p><p>居然也是反转</p><pre><code class=language-go>func reverseLeftWords(s string, n int) string {
+    byteString := []byte(s)
+    // 先反转前n个字符
+    reverse(byteString,0,n-1)
+    // 然后反转后n个字符
+    reverse(byteString,n,len(byteString)-1)
+    // 最后反转整个字符串
+    reverse(byteString,0,len(byteString)-1)
+    return string(byteString)
+}
+
+func reverse(byteString []byte, left int, right int){
+    for left&lt;right{
+        byteString[left],byteString[right]=byteString[right],byteString[left]
+        left++
+        right--
+    }
+}
+</code></pre><p>局部反转再整体反转……吗</p><h2 id=28-find-the-index-of-the-first-occurrence-in-a-string>28. Find the Index of the First Occurrence in a String</h2><h3 id=题目描述-5>题目描述</h3><p>Given two strings needle and haystack, return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.</p><p>KMP算法？如果用语言的库函数的话又太简单了</p><h3 id=解题思路-5>解题思路</h3><p>库函数解法</p><pre><code class=language-go>func strStr(haystack string, needle string) int {
+    return strings.Index(haystack,needle)
+}
+</code></pre><p>有点没意思</p><p>那么不用库函数的话，就得自己实现字符串匹配算法，那就得再看数据结构了</p><p>先摸了！</p><h3 id=kmp笔记>KMP笔记</h3><p>KMP思想：利用已经匹配的信息</p><p>前缀表：获得该串对应的位置的最大相同前后缀长度</p><p>暴力解法：匹配失败后，从断点处，将<strong>模式串</strong>从头开始匹配</p><p>KMP：匹配失败后，因为有前缀表，可以根据前缀表，找到该位置最大<strong>相同</strong>前后缀，</p><p>也就是说，这一部分是相同的，是可以继续接上进行匹配的</p><p>比如，考虑<code>aabaabaafa</code>中查找<code>aabaaf</code>，会在下标为<code>5</code>的位置失去匹配，但是此时，在模式串中，字串[:5]拥有长度为2的最大相同前后缀，所以，模式串将会在<code>[2]b</code>这个位置开始继续匹配，而非从头开始</p><p>从而，模式串从前缀表指示的位置重新开始，与文本串在断点处开始匹配</p><p>这样，匹配的复杂度就进一步降低了，为O(n*m)</p><p>不过，我们还得深入到更多细节</p><h3 id=代码实现>代码实现</h3><p>看不懂，要睡觉了</p><p>起来了，不想看文字了，看视频！</p><h4 id=构造next数组>构造next数组</h4><ol><li>初始化</li><li>处理前后缀不相同的情况</li><li>处理前后缀相同的情况</li></ol><p>相同就跟着走，不相同<code>j</code>就回退到相同</p><pre><code class=language-cpp>void getNext(int* next, const string&amp; s){
+    int j = -1;
+    next[0] = j;
+    for(int i = 1; i &lt; s.size(); i++) { // 注意i从1开始
+        while (j &gt;= 0 &amp;&amp; s[i] != s[j + 1]) { // 前后缀不相同了
+            j = next[j]; // 向前回退
+        }
+        if (s[i] == s[j + 1]) { // 找到相同的前后缀
+            j++;
+        }
+        next[i] = j; // 将j（前缀的长度）赋给next[i]
+    }
+}
+</code></pre><h4 id=利用next数组做匹配>利用next数组做匹配</h4><pre><code class=language-cpp>int j = -1; // 因为next数组里记录的起始位置为-1
+for (int i = 0; i &lt; s.size(); i++) { // 注意i就从0开始
+    while(j &gt;= 0 &amp;&amp; s[i] != t[j + 1]) { // 不匹配
+        j = next[j]; // j 寻找之前匹配的位置
+    }
+    if (s[i] == t[j + 1]) { // 匹配，j和i同时向后移动
+        j++; // i的增加在for循环里
+    }
+    if (j == (t.size() - 1) ) { // 文本串s里出现了模式串t
+        return (i - t.size() + 1);
+    }
+}
+</code></pre><p>一样地，相同跟着走，不一样就按照<code>next</code>数组回退</p><h4 id=统一实现>统一实现</h4><pre><code class=language-cpp>class Solution {
+public:
+    void getNext(int* next,const string &amp;s){
+        int j = -1;
+        next[0] = j;
+        for(int i=1;i&lt;s.size();++i){
+            while(j&gt;=0&amp;&amp;s[i]!=s[j]+1)
+                j =next[j];
+            if(s[i]==s[j+1])
+                j++;
+            next[i]=j;
+        }
+    }
+    int strStr(string haystack, string needle) {
+        if(needle.size()==0)
+            return 0;
+        int next[needle.size()];
+        getNext(next,needle);
+        int j=-1;
+        for(int i=0;i&lt;haystack.size();++i){
+            while(j&gt;=0&amp;&amp;haystack[i]!=needle[j+1])
+                j=next[j];
+            if(haystack[i]==needle[j+1])
+                j++;
+            if(j==(needle.size()-1))
+                return i-needle.size()+1;
+        }
+        return -1;
+    }
+};
+</code></pre><p>怎么没全过……</p><p>对比了一下标答没什么区别，为什么他就可以过呢？</p><p>啊啊啊，不管了，下一题，下一题！</p><h2 id=459-repeated-substring-pattern>459. Repeated Substring Pattern</h2><h3 id=题目描述-6>题目描述</h3><p>Given a string s, check if it can be constructed by taking a substring of it and appending multiple copies of the substring together.</p><h3 id=解题思路-6>解题思路</h3><p>一看，除了暴力一个个匹配以外都不知道</p><p>看看评论区，《简单》</p><p>好，投了，看题解</p><h4 id=移动匹配>移动匹配</h4><p>原来如此，把两个原字符串<code>s</code>拼在一起，然后掐头去尾找还有没有原串<code>s</code>就行了……</p><pre><code class=language-cpp>class Solution {
+public:
+    bool repeatedSubstringPattern(string s) {
+        string t = s+s;
+        t.erase(t.begin());
+        t.erase(t.end() - 1);
+        if (t.find(s) != std::string::npos) 
+            return true; 
+        return false;
+    }
+};
+</code></pre><h4 id=枚举>枚举</h4><pre><code class=language-cpp>class Solution {
+public:
+    bool repeatedSubstringPattern(string s) {
+        int n = s.size();
+        for (int i = 1; i * 2 &lt;= n; ++i) {  // 比较到n/2即可
+            if (n % i == 0) {               // 可以整除可以由数个字串组成
+                bool match = true;
+                for (int j = i; j &lt; n; ++j) {
+                    if (s[j] != s[j - i]) { // 从长度1开始，一个个从0开始比较
+                        match = false;
+                        break;
+                    }
+                }
+                if (match) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+};
+</code></pre><h4 id=kmp>KMP</h4><p>什么，这也能KMP？</p><p>首先，我们得知道KMP的精髓是什么，是利用前缀表得到最大 相同 前后缀 的长度</p><p>前后缀……？</p><p>正是因为 最长相等前后缀的规则，当一个字符串由重复子串组成的，最长相等前后缀<strong>不包含</strong>的子串就是最小重复子串。</p><p>这段推理我没看太懂，摸了</p><p>好，看懂了</p><p><img class=img-zoomable src=https://code-thinking-1253855093.file.myqcloud.com/pics/20220728212157.png alt=继续偷图！></p><p>也就是说，我们可以得到<code>t[0]=k[0]=t[2]=s[2]</code>，这样推导下去就是我们需要的<strong>重复子串</strong></p><p>最大前后缀的公共部分之外的长度，如果可以整除字符串长度，就说明这个字符串满足条件</p><pre><code class=language-cpp>class Solution {
+public:
+    // 求前缀表
+    void getNext (int* next, const string&amp; s){
+        next[0] = -1;
+        int j = -1;
+        for(int i = 1;i &lt; s.size(); i++){
+            while(j &gt;= 0 &amp;&amp; s[i] != s[j + 1]) {
+                j = next[j];
+            }
+            if(s[i] == s[j + 1]) {
+                j++;
+            }
+            next[i] = j;
+        }
+    }
+    bool repeatedSubstringPattern (string s) {
+        if (s.size() == 0) {
+            return false;
+        }
+        int next[s.size()];
+        getNext(next, s);
+        int len = s.size();
+        // 如果可以整除则满足
+        if (next[len - 1] != -1 &amp;&amp; len % (len - (next[len - 1] + 1)) == 0) {
+            return true;
+        }
+        return false;
+    }
+};
+</code></pre><p>一个多月了终于做了十道题，不知道说什么好……</p></div></article><div class="license markdown-body"><blockquote><p>Unless otherwise noted, the content of this site is licensed under <a rel=license href=http://creativecommons.org/licenses/by-nc-sa/4.0/ target=_blank>CC BY-NC-SA 4.0</a>.</p></blockquote></div></div><aside class="col-12 col-md-3 float-left sidebar"><div class="sidebar-item sidebar-pages"><h3>Pages</h3><ul><li><a href=/>Home</a></li><li><a href=/archives/>Archives</a></li><li><a href=/mood/>Mood</a></li><li><a href=/friends/>Friends</a></li><li><a href=/about/>About</a></li><li><a href=/search/>Search</a></li><li><a href=/index.xml>RSS</a></li></ul></div><div class="sidebar-item sidebar-links"><h3>Links</h3><ul><li><a href=https://github.com/shudorcl target=_blank><span>GitHub</span></a></li></ul></div><div class="sidebar-item sidebar-tags"><h3>Tags</h3><div><span><a href=/tags/%E5%8A%9B%E6%89%A3/>力扣</a></span>
+<span><a href=/tags/%E6%9D%82%E7%89%A9/>杂物</a></span>
+<span><a href=/tags/%E7%AC%94%E8%AE%B0/>笔记</a></span>
+<span><a href=/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/>计算机</a></span></div></div><div class="sidebar-item sidebar-toc"><h3>Table of Contents</h3><nav id=TableOfContents><ul><li><a href=#344-reverse-string>344. Reverse String</a><ul><li><a href=#题目描述>题目描述</a></li><li><a href=#解题思路>解题思路</a></li></ul></li><li><a href=#541-reverse-string-ii>541. Reverse String II</a><ul><li><a href=#题目描述-1>题目描述</a></li><li><a href=#解题思路-1>解题思路</a></li></ul></li><li><a href=#剑指offer-05替换空格>剑指Offer 05.替换空格</a><ul><li><a href=#题目描述-2>题目描述</a></li><li><a href=#解题思路-2>解题思路</a></li></ul></li><li><a href=#151-reverse-words-in-a-string>151. Reverse Words in a String</a><ul><li><a href=#题目描述-3>题目描述</a></li><li><a href=#解题思路-3>解题思路</a></li></ul></li><li><a href=#剑指-offer-58---ii-左旋转字符串-lcof>剑指 Offer 58 - II. 左旋转字符串 LCOF</a><ul><li><a href=#题目描述-4>题目描述</a></li><li><a href=#解题思路-4>解题思路</a></li></ul></li><li><a href=#28-find-the-index-of-the-first-occurrence-in-a-string>28. Find the Index of the First Occurrence in a String</a><ul><li><a href=#题目描述-5>题目描述</a></li><li><a href=#解题思路-5>解题思路</a></li><li><a href=#kmp笔记>KMP笔记</a></li><li><a href=#代码实现>代码实现</a></li></ul></li><li><a href=#459-repeated-substring-pattern>459. Repeated Substring Pattern</a><ul><li><a href=#题目描述-6>题目描述</a></li><li><a href=#解题思路-6>解题思路</a></li></ul></li></ul></nav></div></aside></div><div class=btn><div class=btn-menu id=btn-menu><i class="iconfont icon-grid-sharp"></i></div><div class=btn-toggle-mode><i class="iconfont icon-contrast-sharp"></i></div><div class=btn-scroll-top><i class="iconfont icon-chevron-up-circle-sharp"></i></div></div><aside class=sidebar-mobile style=display:none><div class=sidebar-wrapper><div class="sidebar-item sidebar-pages"><h3>Pages</h3><ul><li><a href=/>Home</a></li><li><a href=/archives/>Archives</a></li><li><a href=/mood/>Mood</a></li><li><a href=/friends/>Friends</a></li><li><a href=/about/>About</a></li><li><a href=/search/>Search</a></li><li><a href=/index.xml>RSS</a></li></ul></div><div class="sidebar-item sidebar-links"><h3>Links</h3><ul><li><a href=https://github.com/shudorcl target=_blank><span>GitHub</span></a></li></ul></div><div class="sidebar-item sidebar-tags"><h3>Tags</h3><div><span><a href=/tags/%E5%8A%9B%E6%89%A3/>力扣</a></span>
+<span><a href=/tags/%E6%9D%82%E7%89%A9/>杂物</a></span>
+<span><a href=/tags/%E7%AC%94%E8%AE%B0/>笔记</a></span>
+<span><a href=/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/>计算机</a></span></div></div><div class="sidebar-item sidebar-toc"><h3>Table of Contents</h3><nav id=TableOfContents><ul><li><a href=#344-reverse-string>344. Reverse String</a><ul><li><a href=#题目描述>题目描述</a></li><li><a href=#解题思路>解题思路</a></li></ul></li><li><a href=#541-reverse-string-ii>541. Reverse String II</a><ul><li><a href=#题目描述-1>题目描述</a></li><li><a href=#解题思路-1>解题思路</a></li></ul></li><li><a href=#剑指offer-05替换空格>剑指Offer 05.替换空格</a><ul><li><a href=#题目描述-2>题目描述</a></li><li><a href=#解题思路-2>解题思路</a></li></ul></li><li><a href=#151-reverse-words-in-a-string>151. Reverse Words in a String</a><ul><li><a href=#题目描述-3>题目描述</a></li><li><a href=#解题思路-3>解题思路</a></li></ul></li><li><a href=#剑指-offer-58---ii-左旋转字符串-lcof>剑指 Offer 58 - II. 左旋转字符串 LCOF</a><ul><li><a href=#题目描述-4>题目描述</a></li><li><a href=#解题思路-4>解题思路</a></li></ul></li><li><a href=#28-find-the-index-of-the-first-occurrence-in-a-string>28. Find the Index of the First Occurrence in a String</a><ul><li><a href=#题目描述-5>题目描述</a></li><li><a href=#解题思路-5>解题思路</a></li><li><a href=#kmp笔记>KMP笔记</a></li><li><a href=#代码实现>代码实现</a></li></ul></li><li><a href=#459-repeated-substring-pattern>459. Repeated Substring Pattern</a><ul><li><a href=#题目描述-6>题目描述</a></li><li><a href=#解题思路-6>解题思路</a></li></ul></li></ul></nav></div></div></aside></main><footer><div class="container-lg clearfix"><div class="col-12 footer"><span>&copy; 2020-2023
+<a href=https://shudorcl.github.io>dorcl</a>
+| <a href=https://github.com/shudorcl/shudorcl.github.io>Source code</a>
+| Powered by <a href=https://github.com/dsrkafuu/hugo-theme-fuji/ target=_blank>Fuji-v2</a> & <a href=https://gohugo.io/ target=_blank>Hugo</a></span></div></div></footer><script defer src=https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js></script>
+<script defer src=https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js></script>
+<script defer src=https://cdn.jsdelivr.net/npm/prismjs@1.27.0/components/prism-core.min.js></script>
+<script defer src=https://cdn.jsdelivr.net/npm/prismjs@1.27.0/plugins/autoloader/prism-autoloader.min.js></script>
+<script defer src=/assets/js/fuji.min.js></script></body></html>
